@@ -1,13 +1,15 @@
 # Standard Library Imports
 import requests
 import hashlib
+import os
 import asyncio
 from datetime import datetime
 
 # External imports
+from dotenv import load_dotenv
 from bs4 import BeautifulSoup
 from dhooks import Webhook, Embed
-
+load_dotenv()
 
 class COVID19:
     def __init__(self, timeout):
@@ -90,7 +92,7 @@ class COVID19:
                     embed2 = self.second_embed(potrjeni=potrjeni, potrjenipretekli=ucerajpotrjeni, aktivni=aktivni,
                                                zadnjih7dni=povprečje7dni, dni=na14dni)
                     hook = Webhook(
-                        'WEBHOOKURLHERE')
+                        os.environ.get('webhook'))
 
                     hook.send(embed=embed)
                     asyncio.sleep(0.5)
@@ -105,7 +107,7 @@ class COVID19:
         self.loop = asyncio.get_event_loop()
         self.loop.run_until_complete(asyncio.gather(self.run()))
 
-    # Dont question this part im a retard
+    # Dont question this part im a retard / Tell me if how can i improve this type of function spamming?
     def get_date(self, test):
         # Datum /Date
         self.datum = test[0]
@@ -174,7 +176,7 @@ class COVID19:
         Orginizing the code would be nice because its a mess
         """
         embed = Embed(
-            description='COV SARS 2 KURBA EMBED 1',
+            description='COVID-19 EMBED 1',
             color=0x5CDBF0,
             timestamp=str(datetime.now())  # sets the timestamp to current time
         )
@@ -190,7 +192,7 @@ class COVID19:
 
     def second_embed(self, potrjeni, potrjenipretekli, aktivni, dni, zadnjih7dni):
         embed = Embed(
-            description='COV SARS 2 KURBA EMBED 2',
+            description='COVID-19 EMBED 2',
             color=0x5CDBF0,
             timestamp=str(datetime.now())  # sets the timestamp to current time
         )
@@ -205,4 +207,4 @@ class COVID19:
 
 
 if __name__ == '__main__':
-    COVID19(1800)  # Set the timeout for each request
+    COVID19(2)  # Set the timeout for each request
