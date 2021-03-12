@@ -92,7 +92,7 @@ class COVID19:
                     embed2 = self.second_embed(potrjeni=potrjeni, potrjenipretekli=ucerajpotrjeni, aktivni=aktivni,
                                                zadnjih7dni=povprečje7dni, dni=na14dni)
                     hook = Webhook(
-                        os.environ.get('webhook'))
+                        os.environ.get(os.environ.get('webhook')))
 
                     hook.send(embed=embed)
                     asyncio.sleep(0.5)
